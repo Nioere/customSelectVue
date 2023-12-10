@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    @import 'https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap';
+    @import 'https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.3.2/css/simple-line-icons.min.css';
+    @import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css';
+    @import 'https://fonts.googleapis.com/css?family=Roboto+Mono:300,700';
+
+    body{
+      background: rgb(195, 215, 225);
+      background: -moz-linear-gradient(-45deg, rgba(255, 255, 255, 1) 0%, rgba(195, 215, 225, 1) 100%);
+      background: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 1) 0%, rgba(195, 215, 225, 1) 100%);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(195, 215, 225, 1) 100%);
+    }
+
+    .custom-select {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    margin-top: 50px;
+    width: 350px;
+    font-family: 'Roboto';
+    user-select: none;
+    color: #666666;
+    box-shadow: 0px 1em 2em -1.5em rgba(0, 0, 0, .5);
+  }
+
+  .select-styled {
+    display: inline-block;
+    width: 350px;
+    padding: 12px;
+    border: 1px solid #ebebf8;
+    background-color: #F8F8FF;
+    cursor: pointer;
+    border-radius: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background-color 0.2s;
+    padding-right: 40px;
+  }
+
+  .select-styled:hover{
+    background-color: #F8F8FF;
+    color: #1a1a1d;
+  }
+  
+
+  .select-options {
+    margin-top: 4px;
+    display: block;
+    position: absolute;
+    background-color: #F8F8FF;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    top: 100%;
+    left: 0;
+    right: 0;
+    border-radius: 0 0 7px 7px;
+    width: 350px;
+    box-shadow: 0px 1em 2em -1.5em rgba(0, 0, 0, .5);
+  }
+
+    .select-options div {
+      padding: 10px;
+      cursor: pointer;
+      border-top: 1px solid rgba(0, 0, 0, .05);
+      white-space: normal;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+    .select-options div:hover {
+      color: #1a1a1d;
+      background-color: rgba(130, 151, 165, 0.205);
+      box-shadow: inset 0px 1px 0px rgba(0, 0, 0, .1);
+      border-radius: 0 0 2px 2px;
+
+    }
+
+    .select-options div:last-child {
+      border-bottom: none;
+    }
+
+    .icon-arrow-down{
+      position: absolute;
+      right: 17px;
+    }
+
+    .arrow-up {
+      transform: rotate(180deg);
+    }
+
+  </style>
+
+</head>
+<body>
+
+<div id="app">
+  <div class="custom-select">
+    <div class="select-styled" @click="toggleOptions">{{ selectedOption }} <i :class="{'icon-arrow-down': !showOptions, 'arrow-up': showOptions}"></i></div>
+    <div class="select-options" v-show="showOptions">
+      <div v-for="(option, index) in options" :key="index" @click="selectOption(option)">{{ option }}</div>
+    </div>
+    <select v-model="selectedOption" style="display: none;">
+      <option v-for="(option, index) in options" :key="index" :value="option">{{ option }}</option>
+    </select>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      options: ['Небольшой текст.', 'Очень большоой текст. Очень большоой текст. Очень большоой текст. Очень большоой текст.', 'Что?', 'Очень большоой текст ДВА. Очень большоой текст ДВА. Очень большоой текст ДВА' ,'Огромный текст ТРИ. Огромный текст ТРИ. Огромный текст ТРИ. Огромный текст ТРИ. Огромный текст ТРИ. Огромный текст ТРИ. Огромный текст ТРИ. Огромный текст ТРИ.'],
+      selectedOption: 'Выберите',
+      showOptions: false
+    },
+    methods: {
+      toggleOptions() {
+        this.showOptions = !this.showOptions;
+      },
+      selectOption(option) {
+        this.selectedOption = option;
+        this.showOptions = false;
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
